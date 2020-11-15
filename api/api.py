@@ -2,44 +2,55 @@
 This is the main API module
 """
 
-import flask
+from flask import request, Flask
 
-from flask_restful import Api
 from monitor import Monitor
+from stress import Stress
 
 
-app = flask.Flask(__name__)
-api = Api(app)
+app = Flask(__name__)
 
 monitor = Monitor()
+stress = Stress()
 
 
 @app.route("/cpu", methods=["GET"])
 def get_cpu():
+    """ Route for '/cpu' """
 
     return str(monitor.cpus_avg), 200
 
 
-@app.route("/mem", methods=["GET"])
+@app.route("/memory", methods=["GET"])
 def get_mem():
+    """ Route for '/memory' """
 
     return str(monitor.memory), 200
 
 
 @app.route("/stress_cpu", methods=["GET"])
 def stress_cpu():
+    """ Route for '/stress_cpu' """
 
-    return "", 200
+    interval = request.args.get("interval")
+    stress.stress_cpu_cores(interval=int(interval))
+
+    return"Starting stress on all CPU cores...", 200
 
 
-@app.route("/stress_mem", methods=["GET"])
+@app.route("/stress_memory", methods=["GET"])
 def stress_mem():
+    """ Route for '/stress_memory' """
 
-    return "", 200
+    stress.stress_memory()
+
+    return "Starting stress on memory...", 200
 
 
 @app.route("/status", methods=["GET"])
 def status_health():
+    """ Route for '/status' """
+
     return f"""<xmp>
               Welcome to the Stress API
               status OK
