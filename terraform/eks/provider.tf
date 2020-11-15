@@ -8,6 +8,6 @@ terraform {
   backend "s3" {
     bucket = "xavi-tfstates"
     region = "eu-west-1"
-    key    = "ecr/ros-ecr.tfstate"
+    key    = "eks/ros-eks.tfstate"
   }
 }
