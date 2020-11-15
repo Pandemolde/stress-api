@@ -4,4 +4,4 @@ COPY ./ stress-api/
 WORKDIR /usr/src/app/stress-api
 RUN python3 -m pip install -r requirements.txt
 
-CMD ["python", "./api/run.py"]
+ENTRYPOINT ["python", "./api/run.py"]
