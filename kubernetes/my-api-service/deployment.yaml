@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: stress-api
+    env: master
+  name: stress-api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stress-api
+  template:
+    metadata:
+      labels:
+        app: stress-api
+    spec:
+      containers:
+      - name: stress-api
+        image: stress-api:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
